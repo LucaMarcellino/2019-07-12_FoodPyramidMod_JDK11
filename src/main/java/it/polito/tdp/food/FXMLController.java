@@ -51,9 +51,10 @@ public class FXMLController {
     	txtResult.clear();
     	if(boxFood.getValue() == null)
     		txtResult.appendText("Scegli un cibo");
-    	for(Calorie c: model.getVicini(boxFood.getValue())) {
-    		txtResult.appendText(c+"\n");
-    	}
+    	for(int i=0;i<5;i++) {
+			txtResult.appendText(model.getVicini(boxFood.getValue()).get(i)+"\n");
+		}
+		
 
     }
 
@@ -75,6 +76,23 @@ public class FXMLController {
 
     @FXML
     void doSimula(ActionEvent event) {
+    	txtResult.clear();
+    	int k=0;
+    	try {
+			k= Integer.parseInt(txtK.getText());
+		} catch (NumberFormatException nfe) {
+			txtResult.appendText("inserire un numero intero tra 1 e 10");
+			return;
+		}
+    	
+    	if(k<1 && k>10)
+    		txtResult.appendText("Inserisci un numero compreso tra 1 e 10");
+    	
+    	if(boxFood.getValue() == null)
+    		txtResult.appendText("Scegli un cibo");
+    	
+    	String messaggo = model.simula(boxFood.getValue(), k);
+    	txtResult.appendText(messaggo);
 
     }
 

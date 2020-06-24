@@ -56,12 +56,21 @@ public class Model {
 		}
 		Collections.sort(result);
 		
-		for(int i=0;i<5;i++) {
-			finale.add(result.get(i));
-		}
 		
-		return finale;
+		return result;
 	}
+	
+	public String simula(Food partenza, int k) {
+		Simulator sim= new Simulator(this.grafo, this);
+		sim.setK(k);
+		sim.init(partenza);
+		sim.run();
+		String messaggio= String.format("preparati %d cibi in %f in minuti \n", sim.getNumeroCibi(),sim.getTempoPreparazione());
+		return messaggio;
+	}
+	
+	
+	
 	
 	
 }
