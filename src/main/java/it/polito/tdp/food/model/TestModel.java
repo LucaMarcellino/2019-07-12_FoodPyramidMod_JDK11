@@ -6,6 +6,8 @@ public class TestModel {
 		// TODO Auto-generated method stub
 
 		Model m = new Model();
+		m.creaGrafo(4);
+		m.getVicini(new Food(51180010,"Bagel (plain)"));
 	}
 
 }

@@ -3,6 +3,8 @@ package it.polito.tdp.food;
 import java.net.URL;
 import java.util.ResourceBundle;
 
+import it.polito.tdp.food.model.Calorie;
+import it.polito.tdp.food.model.Food;
 import it.polito.tdp.food.model.Model;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -39,18 +41,35 @@ public class FXMLController {
     private Button btnSimula;
 
     @FXML
-    private ComboBox<?> boxFood;
+    private ComboBox<Food> boxFood;
 
     @FXML
     private TextArea txtResult;
 
     @FXML
     void doCalorie(ActionEvent event) {
+    	txtResult.clear();
+    	if(boxFood.getValue() == null)
+    		txtResult.appendText("Scegli un cibo");
+    	for(Calorie c: model.getVicini(boxFood.getValue())) {
+    		txtResult.appendText(c+"\n");
+    	}
 
     }
 
     @FXML
     void doCreaGrafo(ActionEvent event) {
+    	int ctn=0;
+    	try {
+    		ctn=Integer.parseInt(txtPorzioni.getText());
+		} catch (NumberFormatException nfe) {
+			txtResult.appendText("inserire un numero intero");
+			return;
+		}
+    	model.creaGrafo(ctn);
+    	
+    	boxFood.getItems().addAll(model.getVertex());
+    	
 
     }
 
@@ -73,5 +92,6 @@ public class FXMLController {
 
 	public void setModel(Model model) {
 		this.model = model;
+		txtResult.setEditable(false);
 	}
 }
